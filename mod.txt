@@ -1,0 +1,40 @@
+{
+	"name" : "Standalone ECM Timer 2021",
+	"description" : "Adds a HUD timer for remaining ECM duration. Optional automatic chat alerts",
+	"author" : "Buurazu, LazyOzzy, Eightan, fragtrane",
+	"version" : "1.0",
+	"contact" : "Discord: Buurazu#8042"
+	"blt_version" : 2,
+	"image" : "buurazu.png",
+	"color" : "0.8 0 0",
+	"updates": [{
+		"identifier": "ecm2021",
+		"host": {
+			"meta": "https://raw.githubusercontent.com/Buurazu/Standalone-ECM-Timer-2021/main/meta.json"
+		}
+	}],
+	"pre_hooks" : [
+		{
+			"hook_id" : "lib/entry",
+			"script_path" : "common.lua"
+		}
+	],
+	"hooks" : [
+		{
+			"hook_id" : "lib/managers/menumanager",
+			"script_path" : "menu/menumanager.lua"
+		},
+		{ 	
+			"hook_id" : "lib/managers/hudmanagerpd2",
+			"script_path" : "Ecm.lua"
+		},
+		{
+			"hook_id" : "lib/units/equipment/ecm_jammer/ecmjammerbase",
+			"script_path" : "Ecm.lua"
+		},
+		{
+			"hook_id" : "lib/units/beings/player/playerinventory",
+			"script_path" : "Ecm.lua"
+		}
+	]
+}

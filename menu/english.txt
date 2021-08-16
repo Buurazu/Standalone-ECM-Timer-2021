@@ -1,0 +1,28 @@
+{
+	"ecm2021_options_menu_title" : "Standalone ECM Timer 2021",
+	"ecm2021_options_menu_desc" : "Toggle autochat events, toggle displaying tenths of a second",
+
+	"ecm2021_options_tenths_title" : "Display Tenths of a Second",
+	"ecm2021_options_tenths_desc" : "Toggle between displaying the time as '12s' or '12.3'",
+
+	"ecm2021_options_chat_start_title" : "Autochat on ECM Start",
+	"ecm2021_options_chat_start_desc" : "Toggle an automatic chat message when there's now an active ECM",
+
+	"ecm2021_options_chat_time_toggle_title" : "Autochat on Low Time Remaining",
+	"ecm2021_options_chat_time_toggle_desc" : "Toggle an automatic chat message when ECM time remaining goes below a certain threshold",
+	"ecm2021_options_chat_time_title" : "Time Remaining",
+	"ecm2021_options_chat_time_desc" : "Number of seconds to trigger autochat on",
+
+	"ecm2021_options_chat_time_1" : "1",
+	"ecm2021_options_chat_time_2" : "2",
+	"ecm2021_options_chat_time_3" : "3",
+	"ecm2021_options_chat_time_4" : "4",
+	"ecm2021_options_chat_time_5" : "5",
+
+	"ecm2021_options_chat_pager_title" : "Autochat on No Pager Block",
+	"ecm2021_options_chat_pager_desc" : "Toggle an automatic chat message when someone places an ECM that does not block pagers",
+
+	"ecm2021_options_chat_ecm_ended_title" : "Autochat on ECM End",
+	"ecm2021_options_chat_ecm_ended_desc" : "Toggle an automatic chat message when there's no longer an active ECM"
+
+}

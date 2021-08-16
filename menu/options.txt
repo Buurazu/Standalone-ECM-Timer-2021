@@ -1,0 +1,71 @@
+{
+	"menu_id" : "ecm2021_options_menu",
+	"parent_menu_id" : "blt_options",
+	"title" : "ecm2021_options_menu_title",
+	"description" : "ecm2021_options_menu_desc",
+	"back_callback" : "ECMOptionsSave",
+	"items" : [
+		{
+			"type" : "toggle",
+			"id" : "display_tenths",
+			"title" : "ecm2021_options_tenths_title",
+			"description" : "ecm2021_options_tenths_desc",
+			"callback" : "ECMOptionsCheckbox",
+			"value" : "display_tenths"
+		},
+		{
+			"type" : "divider",
+			"size" : 16
+		},
+		{
+			"type" : "toggle",
+			"id" : "chat_on_start",
+			"title" : "ecm2021_options_chat_start_title",
+			"description" : "ecm2021_options_chat_start_desc",
+			"callback" : "ECMOptionsCheckbox",
+			"value" : "chat_on_start"
+		},
+		{
+			"type" : "toggle",
+			"id" : "chat_on_pager",
+			"title" : "ecm2021_options_chat_pager_title",
+			"description" : "ecm2021_options_chat_pager_desc",
+			"callback" : "ECMOptionsCheckbox",
+			"value" : "chat_on_pager"
+		},
+		{
+			"type" : "toggle",
+			"id" : "chat_on_end",
+			"title" : "ecm2021_options_chat_ecm_ended_title",
+			"description" : "ecm2021_options_chat_ecm_ended_desc",
+			"callback" : "ECMOptionsCheckbox",
+			"value" : "chat_on_end"
+		},
+		{
+			"type" : "toggle",
+			"id" : "chat_on_time",
+			"title" : "ecm2021_options_chat_time_toggle_title",
+			"description" : "ecm2021_options_chat_time_toggle_desc",
+			"callback" : "ECMOptionsCheckbox",
+			"value" : "chat_on_time"
+		},
+{
+    "type" : "multiple_choice",
+    "id" : "time_threshold",
+    "title" : "ecm2021_options_chat_time_title",
+    "description" : "ecm2021_options_chat_time_desc",
+    "callback" : "ECMOptionsMulti",
+    "items" : [
+        "ecm2021_options_chat_time_1",
+        "ecm2021_options_chat_time_2",
+	"ecm2021_options_chat_time_3",
+	"ecm2021_options_chat_time_4",
+	"ecm2021_options_chat_time_5"
+    ],
+    "value" : "time_threshold",
+    "default_value" : 3,
+}
+
+
+	]
+}
