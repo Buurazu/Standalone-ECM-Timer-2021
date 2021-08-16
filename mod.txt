@@ -2,7 +2,7 @@
 	"name" : "Standalone ECM Timer 2021",
 	"description" : "Adds a HUD timer for remaining ECM duration. Optional automatic chat alerts",
 	"author" : "Buurazu, LazyOzzy, Eightan, fragtrane",
-	"version" : "1.0",
+	"version" : "1.1",
 	"contact" : "Discord: Buurazu#8042"
 	"blt_version" : 2,
 	"image" : "buurazu.png",

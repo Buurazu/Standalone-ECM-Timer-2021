@@ -64,7 +64,27 @@
     ],
     "value" : "time_threshold",
     "default_value" : 3,
-}
+},
+		{
+			"type" : "divider",
+			"size" : 16
+		},
+		{
+			"type" : "toggle",
+			"id" : "autochat_as_host",
+			"title" : "ecm2021_options_host_title",
+			"description" : "ecm2021_options_host_desc",
+			"callback" : "ECMOptionsCheckbox",
+			"value" : "autochat_as_host"
+		},
+		{
+			"type" : "toggle",
+			"id" : "autochat_as_client",
+			"title" : "ecm2021_options_client_title",
+			"description" : "ecm2021_options_client_desc",
+			"callback" : "ECMOptionsCheckbox",
+			"value" : "autochat_as_client"
+		}
 
 
 	]

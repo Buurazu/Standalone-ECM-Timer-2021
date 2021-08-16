@@ -23,6 +23,12 @@
 	"ecm2021_options_chat_pager_desc" : "Toggle an automatic chat message when someone places an ECM that does not block pagers",
 
 	"ecm2021_options_chat_ecm_ended_title" : "Autochat on ECM End",
-	"ecm2021_options_chat_ecm_ended_desc" : "Toggle an automatic chat message when there's no longer an active ECM"
+	"ecm2021_options_chat_ecm_ended_desc" : "Toggle an automatic chat message when there's no longer an active ECM",
+
+	"ecm2021_options_host_title" : "Send Chat As Host",
+	"ecm2021_options_host_desc" : "If off, autochats will be system messages (for your eyes only) when hosting"
+
+	"ecm2021_options_client_title" : "Send Chat As Client",
+	"ecm2021_options_client_desc" : "If off, autochats will be system messages (for your eyes only) when in someone else's game"
 
 }

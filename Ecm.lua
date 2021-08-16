@@ -62,6 +62,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		
 		self._prevt = 0
 		self._active_ecm = false
+		self._pocket_ecm = false
     end
 
     function HUDECMCounter:update()
@@ -76,7 +77,8 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 			
 			if t > 0 then
 				if (ECM2021.settings.chat_on_start and self._active_ecm == false) then
-					managers.chat:send_message(1,'?',"ECM effect has started!")
+					if (self._pocket_ecm) then ECM2021:send_message("Pocket ECM has started!")
+					else ECM2021:send_message("ECM effect has started!") end
 				end
 				--set an ECM being active here; other functions can set it to true if they don't want chat on start
 				--for instance, joining midgame or sending the non-pager-blocking message
@@ -88,17 +90,18 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 				end
 				
 				local threshold = tonumber(ECM2021.settings.time_threshold)
-				if (ECM2021.settings.chat_on_time and t < threshold and self._prevt >= threshold) then
+				if (ECM2021.settings.chat_on_time and not self._pocket_ecm and t < threshold and self._prevt >= threshold) then
 					if (threshold ~= 1) then
-						managers.chat:send_message(1,'?',"ECM has " .. threshold .. " seconds left!")
+						ECM2021:send_message("ECM has " .. threshold .. " seconds left!")
 					else --1 seconds is cringe
-						managers.chat:send_message(1,'?',"ECM has " .. threshold .. " second left!")
+						ECM2021:send_message("ECM has " .. threshold .. " second left!")
 					end
 				end
 			else
 				self._active_ecm = false
 				if (ECM2021.settings.chat_on_end and self._prevt > 0) then
-					managers.chat:send_message(1,'?',"ECM effect has ended!")
+					if (self._pocket_ecm) then ECM2021:send_message("Pocket ECM has ended!")
+					else ECM2021:send_message("ECM effect has ended!") end
 				end
 			end
 		else --no longer in whisper mode
@@ -135,8 +138,9 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 		if new_end_time > managers.hud._hud_ecm_counter._end_time then
 			managers.hud._hud_ecm_counter._end_time = new_end_time
 			managers.hud:update_ecm_icons(battery_life_upgrade_lvl == 3)
-			if (ECM2021.settings.chat_on_pager and battery_life_upgrade_lvl ~= 3 and managers.groupai:state():whisper_mode()) then
-				managers.chat:send_message(1,'?',"ECM placed does not block pagers!")
+			managers.hud._hud_ecm_counter._pocket_ecm = false
+			if (ECM2021.settings.chat_on_pager and battery_life_upgrade_lvl ~= 3) then
+				ECM2021:send_message("ECM placed does not block pagers!")
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
 			end
 		end
@@ -149,8 +153,9 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 		if new_end_time > managers.hud._hud_ecm_counter._end_time then
 			managers.hud._hud_ecm_counter._end_time = new_end_time
 			managers.hud:update_ecm_icons(upgrade_lvl == 3)
-			if (ECM2021.settings.chat_on_pager and upgrade_lvl ~= 3 and managers.groupai:state():whisper_mode()) then
-				managers.chat:send_message(1,'?',"ECM placed does not block pagers!")
+			managers.hud._hud_ecm_counter._pocket_ecm = false
+			if (ECM2021.settings.chat_on_pager and upgrade_lvl ~= 3) then
+				ECM2021:send_message("ECM placed does not block pagers!")
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
 			end
 		end
@@ -164,6 +169,7 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 			managers.hud._hud_ecm_counter._end_time = new_end_time
 			managers.hud:update_ecm_icons(false) --not sure if you can check for pager blocking / 30s battery life now, doesn't matter really
 			managers.hud._hud_ecm_counter._active_ecm = true
+			managers.hud._hud_ecm_counter._pocket_ecm = false
 		end
 	end)
 	
@@ -174,6 +180,7 @@ elseif RequiredScript == "lib/units/beings/player/playerinventory" then
 		if new_end_time > managers.hud._hud_ecm_counter._end_time then
 			managers.hud._hud_ecm_counter._end_time = new_end_time
 			managers.hud:update_ecm_icons(true)
+			managers.hud._hud_ecm_counter._pocket_ecm = true
 		end
 	end)
 end
