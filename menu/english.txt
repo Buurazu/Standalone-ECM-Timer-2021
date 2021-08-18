@@ -5,6 +5,9 @@
 	"ecm2021_options_tenths_title" : "Display Tenths of a Second",
 	"ecm2021_options_tenths_desc" : "Toggle between displaying the time as '12s' or '12.3'",
 
+	"ecm2021_options_pager_priority_title" : "Pager-Blocking Time Has Priority",
+	"ecm2021_options_pager_priority_desc" : "If on, the timer will display pager-blocking time left even if it's less than the overall ECM time left",
+
 	"ecm2021_options_chat_start_title" : "Autochat on ECM Start",
 	"ecm2021_options_chat_start_desc" : "Toggle an automatic chat message when there's now an active ECM",
 
@@ -23,12 +26,12 @@
 	"ecm2021_options_chat_pager_desc" : "Toggle an automatic chat message when someone places an ECM that does not block pagers",
 
 	"ecm2021_options_chat_ecm_ended_title" : "Autochat on ECM End",
-	"ecm2021_options_chat_ecm_ended_desc" : "Toggle an automatic chat message when there's no longer an active ECM",
+	"ecm2021_options_chat_ecm_ended_desc" : "Toggle an automatic chat message when the timer runs out\n(as well as on pager-blocking time running out, if pager-blocking time has priority)",
 
 	"ecm2021_options_host_title" : "Send Chat As Host",
-	"ecm2021_options_host_desc" : "If off, autochats will be system messages (for your eyes only) when hosting"
+	"ecm2021_options_host_desc" : "If off, autochats will be for your eyes only when hosting"
 
 	"ecm2021_options_client_title" : "Send Chat As Client",
-	"ecm2021_options_client_desc" : "If off, autochats will be system messages (for your eyes only) when in someone else's game"
+	"ecm2021_options_client_desc" : "If off, autochats will be for your eyes only when in someone else's game (recommended to not be annoying)"
 
 }

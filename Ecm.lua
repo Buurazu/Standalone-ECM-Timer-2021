@@ -3,6 +3,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 
     function HUDECMCounter:init(hud)
 		self._end_time = 0
+		self._nonpager_end_time = 0
 		
 	    self._hud_panel = hud.panel
 	    self._ecm_panel = self._hud_panel:panel({
@@ -63,12 +64,29 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		self._prevt = 0
 		self._active_ecm = false
 		self._pocket_ecm = false
+		self._pager_block = false
     end
 
     function HUDECMCounter:update()
 		--Update time/visibility
 		local current_time = TimerManager:game():time()
 		local t = self._end_time - current_time
+		--when ECM expires, check if we have a non-pager-blocking ECM end time queued up
+		if (t < 0) then
+			t = self._nonpager_end_time - current_time
+			if (t > 0) then
+				if (ECM2021.settings.chat_on_end) then
+					ECM2021:send_message("Pager block effect has ended!")
+				end
+				self._end_time = self._nonpager_end_time
+				self._pocket_ecm = false
+				managers.hud:update_ecm_icons(false)
+			end
+		end
+		
+		--hacker dodge skill check, it might be slightly relevant thing to have on this when things are loud
+		--(or remaining ecm feedback time)
+		--t = managers.player:get_activate_temporary_expire_time("temporary", "pocket_ecm_kill_dodge") - current_time
 		
 		--only run everything when stealth is broken
 		--was there a reason for fragtrane to not disable the timer outside of whisper mode? idk
@@ -113,6 +131,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 	function HUDECMCounter:update_icons(jam_pagers)
         local pager_icon = self._ecm_panel:child("pager_icon")
         pager_icon:set_visible(jam_pagers)
+		self._pager_block = jam_pagers
     end
 
 	--Init
@@ -135,9 +154,14 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 	Hooks:PostHook(ECMJammerBase, "setup", "buuECM_post_ECMJammerBase_setup", function(self, battery_life_upgrade_lvl, ...)
 	--	log("ECM: setup")
 		local new_end_time = TimerManager:game():time() + self:battery_life()
+		--a new pager-blocking ECM will always have a longer end time than non-pager-blocking, so no need to check
 		if new_end_time > managers.hud._hud_ecm_counter._end_time then
-			managers.hud._hud_ecm_counter._end_time = new_end_time
-			managers.hud:update_ecm_icons(battery_life_upgrade_lvl == 3)
+			if (ECM2021.settings.pager_priority and battery_life_upgrade_lvl ~= 3) then
+				managers.hud._hud_ecm_counter._nonpager_end_time = new_end_time
+			else
+				managers.hud._hud_ecm_counter._end_time = new_end_time
+				managers.hud:update_ecm_icons(battery_life_upgrade_lvl == 3)
+			end
 			managers.hud._hud_ecm_counter._pocket_ecm = false
 			if (ECM2021.settings.chat_on_pager and battery_life_upgrade_lvl ~= 3) then
 				ECM2021:send_message("ECM placed does not block pagers!")
@@ -150,14 +174,20 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 	Hooks:PostHook(ECMJammerBase, "sync_setup", "buuECM_post_ECMJammerBase_sync_setup", function(self, upgrade_lvl, ...)
 	--	log("ECM: sync_setup")
 		local new_end_time = TimerManager:game():time() + self:battery_life()
+		--a new pager-blocking ECM will always have a longer end time than non-pager-blocking, so no need to check
 		if new_end_time > managers.hud._hud_ecm_counter._end_time then
-			managers.hud._hud_ecm_counter._end_time = new_end_time
-			managers.hud:update_ecm_icons(upgrade_lvl == 3)
+			if (ECM2021.settings.pager_priority and upgrade_lvl ~= 3) then
+				managers.hud._hud_ecm_counter._nonpager_end_time = new_end_time
+			else
+				managers.hud._hud_ecm_counter._end_time = new_end_time
+				managers.hud:update_ecm_icons(upgrade_lvl == 3)
+			end
 			managers.hud._hud_ecm_counter._pocket_ecm = false
 			if (ECM2021.settings.chat_on_pager and upgrade_lvl ~= 3) then
 				ECM2021:send_message("ECM placed does not block pagers!")
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
 			end
+			
 		end
 	end)
 	
@@ -177,7 +207,8 @@ elseif RequiredScript == "lib/units/beings/player/playerinventory" then
 	--Pocket ECMs
 	Hooks:PostHook(PlayerInventory, "_start_jammer_effect", "buuECM_post_PlayerInventory__start_jammer_effect", function(self, end_time)
 		local new_end_time = end_time or TimerManager:game():time() + self:get_jammer_time()
-		if new_end_time > managers.hud._hud_ecm_counter._end_time then
+		if new_end_time > managers.hud._hud_ecm_counter._end_time or
+		(ECM2021.settings.pager_priority and managers.hud._hud_ecm_counter._pager_block == false) then
 			managers.hud._hud_ecm_counter._end_time = new_end_time
 			managers.hud:update_ecm_icons(true)
 			managers.hud._hud_ecm_counter._pocket_ecm = true

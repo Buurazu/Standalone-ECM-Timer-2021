@@ -14,6 +14,14 @@
 			"value" : "display_tenths"
 		},
 		{
+			"type" : "toggle",
+			"id" : "pager_priority",
+			"title" : "ecm2021_options_pager_priority_title",
+			"description" : "ecm2021_options_pager_priority_desc",
+			"callback" : "ECMOptionsCheckbox",
+			"value" : "pager_priority"
+		},
+		{
 			"type" : "divider",
 			"size" : 16
 		},

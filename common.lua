@@ -3,6 +3,7 @@ ECM2021._path = ModPath
 ECM2021._data_path = SavePath .. 'ecm2021.txt'
 ECM2021.settings = {
 	display_tenths = true,
+	pager_priority = true,
 	chat_on_start = false,
 	chat_on_time = false,
 	chat_on_pager = false,
@@ -40,6 +41,8 @@ function ECM2021:send_message(msg)
 	if (sendit) then
 		managers.chat:send_message(1,'?',msg)
 	else
-		managers.chat:feed_system_message(1,msg)
+		managers.chat:_receive_message(1, "ECM Timer", msg, Color("09b1db"))
+		--managers.chat:_receive_message(1, "ECM Timer", msg, Color("5c9fb8"))
+		--managers.chat:feed_system_message(1,msg)
 	end
 end
