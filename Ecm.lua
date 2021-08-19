@@ -158,6 +158,7 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 		if new_end_time > managers.hud._hud_ecm_counter._end_time then
 			if (ECM2021.settings.pager_priority and battery_life_upgrade_lvl ~= 3) then
 				managers.hud._hud_ecm_counter._nonpager_end_time = new_end_time
+				if (managers.hud._hud_ecm_counter._pager_block == false) then managers.hud._hud_ecm_counter._end_time = new_end_time end
 			else
 				managers.hud._hud_ecm_counter._end_time = new_end_time
 				managers.hud:update_ecm_icons(battery_life_upgrade_lvl == 3)
@@ -178,6 +179,7 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 		if new_end_time > managers.hud._hud_ecm_counter._end_time then
 			if (ECM2021.settings.pager_priority and upgrade_lvl ~= 3) then
 				managers.hud._hud_ecm_counter._nonpager_end_time = new_end_time
+				if (managers.hud._hud_ecm_counter._pager_block == false) then managers.hud._hud_ecm_counter._end_time = new_end_time end
 			else
 				managers.hud._hud_ecm_counter._end_time = new_end_time
 				managers.hud:update_ecm_icons(upgrade_lvl == 3)
