@@ -18,7 +18,7 @@
 	"ecm2021_options_blink_intensity_desc" : "Max percentage of red to apply to the timer",
 
 	"ecm2021_options_chat_start_title" : "Chat on ECM Start",
-	"ecm2021_options_chat_start_desc" : "Toggle an automatic chat message when there's now an active ECM\n(On Send as Host, these settings will send a private message just for you as a client)",
+	"ecm2021_options_chat_start_desc" : "Toggle an automatic chat message when there's now an active ECM\n(On Send as Host, these settings will send still send to self as a client)",
 
 	"ecm2021_options_chat_time_toggle_title" : "Chat on Low Time",
 	"ecm2021_options_chat_time_toggle_desc" : "Toggle an automatic chat message when ECM time remaining goes below the blink threshold",
@@ -44,7 +44,8 @@
 	"ecm2021_options_client_desc" : "If off, autochats will be for your eyes only when in someone else's game (recommended to not be annoying)"
 
 	"ecm2021_options_chat_multi_never" : "Don't Send",
+	"ecm2021_options_chat_multi_self" : "Send To Self",
 	"ecm2021_options_chat_multi_host" : "Send As Host",
-	"ecm2021_options_chat_multi_always" : "Send",
+	"ecm2021_options_chat_multi_always" : "Send As Client",
 
 }
