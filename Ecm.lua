@@ -65,20 +65,20 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		self._active_ecm = false
 		self._pocket_ecm = false
 		self._pager_block = false
+		
+		ECM2021._playing_the_game = true
     end
 
     function HUDECMCounter:update()
 		--Update time/visibility
 		local current_time = TimerManager:game():time()
 		local t = self._end_time - current_time
-		--when ECM expires, check if we have a non-pager-blocking ECM end time queued up
+		--when a pager-blocking ECM expires, check if we have a non-pager-blocking ECM end time queued up
 		if (t < 0) then
 			t = self._nonpager_end_time - current_time
 			if (t > 0) then
-				--this line should only play if there was an active pager ecm going, because when there isn't, we set _end_time already
-				if (ECM2021.settings.chat_on_end) then
-					ECM2021:send_message("Pager block effect has ended!")
-				end
+				--these lines should only play if there was an active pager ecm going, because when there isn't, we set _end_time already
+				ECM2021:send_message("Pager block effect has ended!", ECM2021.settings.chat_on_end)
 				self._end_time = self._nonpager_end_time
 				self._pocket_ecm = false
 				managers.hud:update_ecm_icons(false)
@@ -95,9 +95,9 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 			self._ecm_panel:set_visible(t > 0)
 			
 			if t > 0 then
-				if (ECM2021.settings.chat_on_start and self._active_ecm == false) then
-					if (self._pocket_ecm) then ECM2021:send_message("Pocket ECM has started!")
-					else ECM2021:send_message("ECM effect has started!") end
+				if (self._active_ecm == false) then
+					if (self._pocket_ecm) then ECM2021:send_message("Pocket ECM has started!", ECM2021.settings.chat_on_start)
+					else ECM2021:send_message("ECM effect has started!", ECM2021.settings.chat_on_start) end
 				end
 				--set an ECM being active here; other functions can set it to true if they don't want chat on start
 				--for instance, joining midgame or sending the non-pager-blocking message
@@ -105,22 +105,39 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 				if (ECM2021.settings.display_tenths) then
 					self._text:set_text(string.format("%.1f", t))
 				else
-					self._text:set_text(string.format("%.fs", t))
+					--old rounding text
+					--self._text:set_text(string.format("%.fs", t))
+					self._text:set_text(math.ceil(t) .. "s")
 				end
 				
+				--does it have to be tonumbered?
 				local threshold = tonumber(ECM2021.settings.time_threshold)
-				if (ECM2021.settings.chat_on_time and not self._pocket_ecm and t < threshold and self._prevt >= threshold) then
+				local freq = ECM2021.settings.blink_frequency
+				local intensity = ECM2021.settings.blink_intensity
+				if (t < threshold and ECM2021.settings.blink_when_low) then
+					--turn our color into a value between 0 and (frequency / 2), going up and down
+					local red = (threshold - t) % freq
+					if (red > freq/2) then red = freq - red end
+					--now turn it into a value between 0 and 1
+					red = red / (freq/2)
+					--now turn it into a value between 255 and 0 (minimum based on intensity percentage)
+					red = math.floor(255 - red * (255 * intensity/100))
+					self._text:set_color(Color("ff" .. string.format("%02x", red) .. string.format("%02x", red)))
+				else
+					self._text:set_color(Color.white)
+				end
+				if (not self._pocket_ecm and t < threshold and self._prevt >= threshold) then
 					if (threshold ~= 1) then
-						ECM2021:send_message("ECM has " .. threshold .. " seconds left!")
+						ECM2021:send_message("ECM has " .. threshold .. " seconds left!", ECM2021.settings.chat_on_time)
 					else --1 seconds is cringe
-						ECM2021:send_message("ECM has " .. threshold .. " second left!")
+						ECM2021:send_message("ECM has " .. threshold .. " second left!", ECM2021.settings.chat_on_time)
 					end
 				end
 			else
 				self._active_ecm = false
-				if (ECM2021.settings.chat_on_end and self._prevt > 0) then
-					if (self._pocket_ecm) then ECM2021:send_message("Pocket ECM has ended!")
-					else ECM2021:send_message("ECM effect has ended!") end
+				if (self._prevt > 0) then
+					if (self._pocket_ecm) then ECM2021:send_message("Pocket ECM has ended!", ECM2021.settings.chat_on_end)
+					else ECM2021:send_message("ECM effect has ended!", ECM2021.settings.chat_on_end) end
 				end
 			end
 		else --no longer in whisper mode
@@ -168,8 +185,8 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 				managers.hud:update_ecm_icons(battery_life_upgrade_lvl == 3)
 			end
 			managers.hud._hud_ecm_counter._pocket_ecm = false
-			if (ECM2021.settings.chat_on_pager and battery_life_upgrade_lvl ~= 3) then
-				ECM2021:send_message("ECM placed does not block pagers!")
+			if (battery_life_upgrade_lvl ~= 3) then
+				ECM2021:send_message("ECM placed does not block pagers!", ECM2021.settings.chat_on_pager)
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
 			end
 		end
@@ -192,8 +209,8 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 				managers.hud:update_ecm_icons(upgrade_lvl == 3)
 			end
 			managers.hud._hud_ecm_counter._pocket_ecm = false
-			if (ECM2021.settings.chat_on_pager and upgrade_lvl ~= 3) then
-				ECM2021:send_message("ECM placed does not block pagers!")
+			if (upgrade_lvl ~= 3) then
+				ECM2021:send_message("ECM placed does not block pagers!", ECM2021.settings.chat_on_pager)
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
 			end
 			
@@ -223,5 +240,10 @@ elseif RequiredScript == "lib/units/beings/player/playerinventory" then
 			managers.hud:update_ecm_icons(true)
 			managers.hud._hud_ecm_counter._pocket_ecm = true
 		end
+	end)
+elseif RequiredScript == "lib/utils/accelbyte/telemetry" then
+	--Stop sending chat during end of heist (thanks Rex)
+	Hooks:PostHook(Telemetry, "on_end_heist", "ECM2021_on_end_heist", function(self)
+		ECM2021._playing_the_game = false
 	end)
 end

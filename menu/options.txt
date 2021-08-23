@@ -27,73 +27,111 @@
 		},
 		{
 			"type" : "toggle",
-			"id" : "chat_on_start",
-			"title" : "ecm2021_options_chat_start_title",
-			"description" : "ecm2021_options_chat_start_desc",
+			"id" : "blink_when_low",
+			"title" : "ecm2021_options_blink_title",
+			"description" : "ecm2021_options_blink_desc",
 			"callback" : "ECMOptionsCheckbox",
-			"value" : "chat_on_start"
+			"value" : "blink_when_low"
 		},
 		{
-			"type" : "toggle",
-			"id" : "chat_on_pager",
-			"title" : "ecm2021_options_chat_pager_title",
-			"description" : "ecm2021_options_chat_pager_desc",
-			"callback" : "ECMOptionsCheckbox",
-			"value" : "chat_on_pager"
+			"type" : "multiple_choice",
+			"id" : "time_threshold",
+			"title" : "ecm2021_options_chat_time_title",
+			"description" : "ecm2021_options_chat_time_desc",
+			"callback" : "ECMOptionsMulti",
+			"items" : [
+				"ecm2021_options_chat_time_1",
+				"ecm2021_options_chat_time_2",
+				"ecm2021_options_chat_time_3",
+				"ecm2021_options_chat_time_4",
+				"ecm2021_options_chat_time_5"
+			],
+			"value" : "time_threshold",
+			"default_value" : 3,
 		},
 		{
-			"type" : "toggle",
-			"id" : "chat_on_end",
-			"title" : "ecm2021_options_chat_ecm_ended_title",
-			"description" : "ecm2021_options_chat_ecm_ended_desc",
-			"callback" : "ECMOptionsCheckbox",
-			"value" : "chat_on_end"
+			"type" : "slider",
+			"id" : "blink_frequency",
+			"title" : "ecm2021_options_blink_frequency_title",
+			"description" : "ecm2021_options_blink_frequency_desc",
+			"callback" : "ECMOptionsMulti",
+			"value" : "blink_frequency",
+			"default_value" : 1.5,
+			"min" : 0.01,
+			"max" : 3,
+			"step" : 0.1
 		},
 		{
-			"type" : "toggle",
-			"id" : "chat_on_time",
-			"title" : "ecm2021_options_chat_time_toggle_title",
-			"description" : "ecm2021_options_chat_time_toggle_desc",
-			"callback" : "ECMOptionsCheckbox",
-			"value" : "chat_on_time"
+			"type" : "slider",
+			"id" : "blink_intensity",
+			"title" : "ecm2021_options_blink_intensity_title",
+			"description" : "ecm2021_options_blink_intensity_desc",
+			"callback" : "ECMOptionsRoundValue",
+			"value" : "blink_intensity",
+			"default_value" : 50,
+			"min" : 0,
+			"max" : 100,
+			"step" : 1
 		},
-{
-    "type" : "multiple_choice",
-    "id" : "time_threshold",
-    "title" : "ecm2021_options_chat_time_title",
-    "description" : "ecm2021_options_chat_time_desc",
-    "callback" : "ECMOptionsMulti",
-    "items" : [
-        "ecm2021_options_chat_time_1",
-        "ecm2021_options_chat_time_2",
-	"ecm2021_options_chat_time_3",
-	"ecm2021_options_chat_time_4",
-	"ecm2021_options_chat_time_5"
-    ],
-    "value" : "time_threshold",
-    "default_value" : 3,
-},
 		{
 			"type" : "divider",
 			"size" : 16
 		},
 		{
-			"type" : "toggle",
-			"id" : "autochat_as_host",
-			"title" : "ecm2021_options_host_title",
-			"description" : "ecm2021_options_host_desc",
-			"callback" : "ECMOptionsCheckbox",
-			"value" : "autochat_as_host"
+			"type" : "multiple_choice",
+			"id" : "chat_on_start",
+			"title" : "ecm2021_options_chat_start_title",
+			"description" : "ecm2021_options_chat_start_desc",
+			"callback" : "ECMOptionsMulti",
+			"value" : "chat_on_start",
+			"default_value" : 1,
+			"items" : [
+				"ecm2021_options_chat_multi_never",
+				"ecm2021_options_chat_multi_host",
+				"ecm2021_options_chat_multi_always"
+			]
 		},
 		{
-			"type" : "toggle",
-			"id" : "autochat_as_client",
-			"title" : "ecm2021_options_client_title",
-			"description" : "ecm2021_options_client_desc",
-			"callback" : "ECMOptionsCheckbox",
-			"value" : "autochat_as_client"
+			"type" : "multiple_choice",
+			"id" : "chat_on_pager",
+			"title" : "ecm2021_options_chat_pager_title",
+			"description" : "ecm2021_options_chat_pager_desc",
+			"callback" : "ECMOptionsMulti",
+			"value" : "chat_on_pager",
+			"default_value" : 1,
+			"items" : [
+				"ecm2021_options_chat_multi_never",
+				"ecm2021_options_chat_multi_host",
+				"ecm2021_options_chat_multi_always"
+			]
+		},
+		{
+			"type" : "multiple_choice",
+			"id" : "chat_on_time",
+			"title" : "ecm2021_options_chat_time_toggle_title",
+			"description" : "ecm2021_options_chat_time_toggle_desc",
+			"callback" : "ECMOptionsMulti",
+			"value" : "chat_on_time",
+			"default_value" : 1,
+			"items" : [
+				"ecm2021_options_chat_multi_never",
+				"ecm2021_options_chat_multi_host",
+				"ecm2021_options_chat_multi_always"
+			]
+		},
+		{
+			"type" : "multiple_choice",
+			"id" : "chat_on_end",
+			"title" : "ecm2021_options_chat_ecm_ended_title",
+			"description" : "ecm2021_options_chat_ecm_ended_desc",
+			"callback" : "ECMOptionsMulti",
+			"value" : "chat_on_end",
+			"default_value" : 1,
+			"items" : [
+				"ecm2021_options_chat_multi_never",
+				"ecm2021_options_chat_multi_host",
+				"ecm2021_options_chat_multi_always"
+			]
 		}
-
-
 	]
 }

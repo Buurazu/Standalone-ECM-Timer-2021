@@ -4,23 +4,44 @@ ECM2021._data_path = SavePath .. 'ecm2021.txt'
 ECM2021.settings = {
 	display_tenths = true,
 	pager_priority = true,
-	chat_on_start = false,
-	chat_on_time = false,
-	chat_on_pager = false,
-	chat_on_end = false,
-	time_threshold = 3,
-	autochat_as_host = true,
-	autochat_as_client = false
+	blink_when_low = true,
+	blink_intensity = 50,
+	blink_frequency = 1.5,
+	chat_on_start = 1,
+	chat_on_time = 1,
+	chat_on_pager = 1,
+	chat_on_end = 1,
+	time_threshold = 3
 }
+ECM2021._playing_the_game = false
+ECM2021._old_autochat = 1
 
 function ECM2021:Load()
 	local file = io.open(ECM2021._data_path, 'r')
 	if file then
 		for k, v in pairs(json.decode(file:read('*all')) or {}) do
-			ECM2021.settings[k] = v
+			--log the old global chat settings and keep them out of the new settings file
+			if (k == "autochat_as_host") then
+				if (v and ECM2021._old_autochat ~= 3) then ECM2021._old_autochat = 2 end
+			elseif (k == "autochat_as_client") then
+				if (v) then ECM2021._old_autochat = 3 end
+			else
+				ECM2021.settings[k] = v
+			end
 		end
 		file:close()
 	end
+end
+
+function ECM2021:ConvertOldSettings()
+	if (ECM2021._old_autochat == 1) then return end
+	
+	--check if each chat setting used to be true
+	if (ECM2021.settings["chat_on_start"]) then ECM2021.settings["chat_on_start"] = ECM2021._old_autochat end
+	if (ECM2021.settings["chat_on_time"]) then ECM2021.settings["chat_on_time"] = ECM2021._old_autochat end
+	if (ECM2021.settings["chat_on_pager"]) then ECM2021.settings["chat_on_pager"] = ECM2021._old_autochat end
+	if (ECM2021.settings["chat_on_end"]) then ECM2021.settings["chat_on_end"] = ECM2021._old_autochat end
+	
 end
 
 function ECM2021:Save()
@@ -31,18 +52,18 @@ function ECM2021:Save()
 	end
 end
 
-function ECM2021:send_message(msg)
-	if (not managers.groupai:state():whisper_mode()) then return end
+function ECM2021:send_message(msg, option)
+	--Not Stealth, post-game screen, or Don't Send option
+	if (not managers.groupai:state():whisper_mode() or not ECM2021._playing_the_game or option == 1) then return end
 	local sendit = false
-	--i didn't want a big if statement...
-	if (Network:is_server() and ECM2021.settings.autochat_as_host) then sendit = true end
-	if (not Network:is_server() and ECM2021.settings.autochat_as_client) then sendit = true end
+	--Send as Host or Send option
+	if (Network:is_server() and option >= 2) then sendit = true end
+	--Send option
+	if (not Network:is_server() and option == 3) then sendit = true end
 
 	if (sendit) then
 		managers.chat:send_message(1,'?',msg)
 	else
 		managers.chat:_receive_message(1, "ECM Timer", msg, Color("09b1db"))
-		--managers.chat:_receive_message(1, "ECM Timer", msg, Color("5c9fb8"))
-		--managers.chat:feed_system_message(1,msg)
 	end
 end

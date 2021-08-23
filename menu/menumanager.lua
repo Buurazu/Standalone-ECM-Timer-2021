@@ -13,7 +13,7 @@ Hooks:Add('MenuManagerInitialize', 'MenuManagerInitialize_ECM2021', function(men
 		ECM2021.settings[item:name()] = item:value() == 'on'
 	end
 
-	MenuCallbackHandler.ECMOptionsValue = function(this, item)
+	MenuCallbackHandler.ECMOptionsRoundValue = function(this, item)
 		ECM2021.settings[item:name()] = math.floor(item:value())
 	end
 	
@@ -26,6 +26,7 @@ Hooks:Add('MenuManagerInitialize', 'MenuManagerInitialize_ECM2021', function(men
 	end
 
 	ECM2021:Load()
+	ECM2021:ConvertOldSettings()
 
 	MenuHelper:LoadFromJsonFile(ECM2021._path .. 'menu/options.txt', ECM2021, ECM2021.settings)
 

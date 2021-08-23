@@ -3,18 +3,27 @@
 	"ecm2021_options_menu_desc" : "Toggle autochat events, toggle displaying tenths of a second",
 
 	"ecm2021_options_tenths_title" : "Display Tenths of a Second",
-	"ecm2021_options_tenths_desc" : "Toggle between displaying the time as '12s' or '12.3'",
+	"ecm2021_options_tenths_desc" : "Toggle between displaying the time as '13s' or '12.3'\n(whole seconds always round up; 0s is never shown)",
 
 	"ecm2021_options_pager_priority_title" : "Pager-Blocking Time Has Priority",
 	"ecm2021_options_pager_priority_desc" : "If on, the timer will display pager-blocking time left even if it's less than the overall ECM time left",
 
-	"ecm2021_options_chat_start_title" : "Autochat on ECM Start",
-	"ecm2021_options_chat_start_desc" : "Toggle an automatic chat message when there's now an active ECM",
+	"ecm2021_options_blink_title" : "Fade to Red When Time is Low",
+	"ecm2021_options_blink_desc" : "If on, the timer will change color from white to red and back when ECM time is almost up",
 
-	"ecm2021_options_chat_time_toggle_title" : "Autochat on Low Time Remaining",
-	"ecm2021_options_chat_time_toggle_desc" : "Toggle an automatic chat message when ECM time remaining goes below a certain threshold",
+	"ecm2021_options_blink_frequency_title" : "Fade Length",
+	"ecm2021_options_blink_frequency_desc" : "Time in seconds to shift from white to red and back to white",
+
+	"ecm2021_options_blink_intensity_title" : "Fade Intensity",
+	"ecm2021_options_blink_intensity_desc" : "Max percentage of red to apply to the timer",
+
+	"ecm2021_options_chat_start_title" : "Chat on ECM Start",
+	"ecm2021_options_chat_start_desc" : "Toggle an automatic chat message when there's now an active ECM\n(On Send as Host, these settings will send a private message just for you as a client)",
+
+	"ecm2021_options_chat_time_toggle_title" : "Chat on Low Time",
+	"ecm2021_options_chat_time_toggle_desc" : "Toggle an automatic chat message when ECM time remaining goes below the blink threshold",
 	"ecm2021_options_chat_time_title" : "Time Remaining",
-	"ecm2021_options_chat_time_desc" : "Number of seconds to trigger autochat on",
+	"ecm2021_options_chat_time_desc" : "Number of seconds to trigger the blink effect (or time remaining autochat) on",
 
 	"ecm2021_options_chat_time_1" : "1",
 	"ecm2021_options_chat_time_2" : "2",
@@ -22,10 +31,10 @@
 	"ecm2021_options_chat_time_4" : "4",
 	"ecm2021_options_chat_time_5" : "5",
 
-	"ecm2021_options_chat_pager_title" : "Autochat on No Pager Block",
+	"ecm2021_options_chat_pager_title" : "Chat on No Block",
 	"ecm2021_options_chat_pager_desc" : "Toggle an automatic chat message when someone places an ECM that does not block pagers",
 
-	"ecm2021_options_chat_ecm_ended_title" : "Autochat on ECM End",
+	"ecm2021_options_chat_ecm_ended_title" : "Chat on ECM End",
 	"ecm2021_options_chat_ecm_ended_desc" : "Toggle an automatic chat message when the timer runs out\n(as well as on pager-blocking time running out, if pager-blocking time has priority)",
 
 	"ecm2021_options_host_title" : "Send Chat As Host",
@@ -33,5 +42,9 @@
 
 	"ecm2021_options_client_title" : "Send Chat As Client",
 	"ecm2021_options_client_desc" : "If off, autochats will be for your eyes only when in someone else's game (recommended to not be annoying)"
+
+	"ecm2021_options_chat_multi_never" : "Don't Send",
+	"ecm2021_options_chat_multi_host" : "Send As Host",
+	"ecm2021_options_chat_multi_always" : "Send",
 
 }
