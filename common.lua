@@ -11,7 +11,7 @@ ECM2021.settings = {
 	chat_on_time = 1,
 	chat_on_pager = 1,
 	chat_on_end = 1,
-	time_threshold = 3
+	time_threshold = 5
 }
 ECM2021._playing_the_game = false
 ECM2021._old_autochat = 1

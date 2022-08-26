@@ -89,7 +89,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		--(or remaining ecm feedback time)
 		--t = managers.player:get_activate_temporary_expire_time("temporary", "pocket_ecm_kill_dodge") - current_time
 		
-		--only run everything when stealth is broken
+		--only run everything when stealth isn't broken
 		--was there a reason for fragtrane to not disable the timer outside of whisper mode? idk
 		if (managers.groupai:state():whisper_mode()) then
 			self._ecm_panel:set_visible(t > 0)
@@ -184,11 +184,14 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 				managers.hud._hud_ecm_counter._end_time = new_end_time
 				managers.hud:update_ecm_icons(battery_life_upgrade_lvl == 3)
 			end
-			managers.hud._hud_ecm_counter._pocket_ecm = false
 			if (battery_life_upgrade_lvl ~= 3) then
 				ECM2021:send_message("ECM placed does not block pagers!", ECM2021.settings.chat_on_pager)
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
+			elseif (managers.hud._hud_ecm_counter._pocket_ecm) then
+				ECM2021:send_message("Full-length ECM placed!", ECM2021.settings.chat_on_start)
+				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
 			end
+			managers.hud._hud_ecm_counter._pocket_ecm = false
 		end
 	end)
 	
@@ -208,12 +211,14 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 				managers.hud._hud_ecm_counter._end_time = new_end_time
 				managers.hud:update_ecm_icons(upgrade_lvl == 3)
 			end
-			managers.hud._hud_ecm_counter._pocket_ecm = false
 			if (upgrade_lvl ~= 3) then
 				ECM2021:send_message("ECM placed does not block pagers!", ECM2021.settings.chat_on_pager)
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
+			elseif (managers.hud._hud_ecm_counter._pocket_ecm) then
+				ECM2021:send_message("Full-length ECM placed!", ECM2021.settings.chat_on_start)
+				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
 			end
-			
+			managers.hud._hud_ecm_counter._pocket_ecm = false
 		end
 	end)
 	
