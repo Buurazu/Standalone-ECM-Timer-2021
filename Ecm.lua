@@ -187,7 +187,7 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 			if (battery_life_upgrade_lvl ~= 3) then
 				ECM2021:send_message("ECM placed does not block pagers!", ECM2021.settings.chat_on_pager)
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
-			elseif (managers.hud._hud_ecm_counter._pocket_ecm) then
+			elseif (managers.hud._hud_ecm_counter._pocket_ecm and managers.hud._hud_ecm_counter._active_ecm) then
 				ECM2021:send_message("Full-length ECM placed!", ECM2021.settings.chat_on_start)
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
 			end
@@ -214,7 +214,7 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 			if (upgrade_lvl ~= 3) then
 				ECM2021:send_message("ECM placed does not block pagers!", ECM2021.settings.chat_on_pager)
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
-			elseif (managers.hud._hud_ecm_counter._pocket_ecm) then
+			elseif (managers.hud._hud_ecm_counter._pocket_ecm and managers.hud._hud_ecm_counter._active_ecm) then
 				ECM2021:send_message("Full-length ECM placed!", ECM2021.settings.chat_on_start)
 				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
 			end
