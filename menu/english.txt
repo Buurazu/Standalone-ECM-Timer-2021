@@ -48,4 +48,7 @@
 	"ecm2021_options_chat_multi_host" : "Send As Host",
 	"ecm2021_options_chat_multi_always" : "Send As Client",
 
+	"ecm2021_options_hud_title" : "Display HUD Element",
+	"ecm2021_options_hud_desc" : "You can disable the HUD element here, if you only want the chat functionality",
+
 }

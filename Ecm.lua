@@ -92,7 +92,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		--only run everything when stealth isn't broken
 		--was there a reason for fragtrane to not disable the timer outside of whisper mode? idk
 		if (managers.groupai:state():whisper_mode()) then
-			self._ecm_panel:set_visible(t > 0)
+			self._ecm_panel:set_visible(t > 0 and ECM2021.settings.enable_hud)
 			
 			if t > 0 then
 				if (self._active_ecm == false) then

@@ -2,6 +2,7 @@ _G.ECM2021 = _G.ECM2021 or {}
 ECM2021._path = ModPath
 ECM2021._data_path = SavePath .. 'ecm2021.txt'
 ECM2021.settings = {
+	enable_hud = true,
 	display_tenths = true,
 	pager_priority = true,
 	blink_when_low = true,

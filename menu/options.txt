@@ -7,6 +7,18 @@
 	"items" : [
 		{
 			"type" : "toggle",
+			"id" : "enable_hud",
+			"title" : "ecm2021_options_hud_title",
+			"description" : "ecm2021_options_hud_desc",
+			"callback" : "ECMOptionsCheckbox",
+			"value" : "enable_hud"
+		},
+		{
+			"type" : "divider",
+			"size" : 16
+		},
+		{
+			"type" : "toggle",
 			"id" : "display_tenths",
 			"title" : "ecm2021_options_tenths_title",
 			"description" : "ecm2021_options_tenths_desc",
