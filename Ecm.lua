@@ -81,7 +81,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 				ECM2021:send_message("Pager block effect has ended!", ECM2021.settings.chat_on_end)
 				self._end_time = self._nonpager_end_time
 				self._pocket_ecm = false
-				managers.hud:update_ecm_icons(false)
+				managers.hud:update_ecm_icons_2021(false)
 			end
 		end
 		
@@ -154,16 +154,16 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 
 	--Init
 	Hooks:PostHook(HUDManager, "_setup_player_info_hud_pd2", "buuECM_post_HUDManager__setup_player_info_hud_pd2", function(self)
-		self._hud_ecm_counter = HUDECMCounter2021:new(managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2))
+		self._buu_ecm_counter = HUDECMCounter2021:new(managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2))
 	end)
 	
 	--Update ECM timer
 	Hooks:PostHook(HUDManager, "update", "buuECM_post_HUDManager_update", function(self)
-		self._hud_ecm_counter:update()
+		self._buu_ecm_counter:update()
 	end)
 
-	function HUDManager:update_ecm_icons(jam_pagers)
-        self._hud_ecm_counter:update_icons(jam_pagers)
+	function HUDManager:update_ecm_icons_2021(jam_pagers)
+        self._buu_ecm_counter:update_icons(jam_pagers)
     end
 
 elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
@@ -173,25 +173,25 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 	--	log("ECM: setup")
 		local new_end_time = TimerManager:game():time() + self:battery_life()
 		--a new pager-blocking ECM will always have a longer end time than non-pager-blocking, so no need to check that
-		if new_end_time > managers.hud._hud_ecm_counter._end_time then
+		if new_end_time > managers.hud._buu_ecm_counter._end_time then
 			if (ECM2021.settings.pager_priority and battery_life_upgrade_lvl ~= 3) then
-				managers.hud._hud_ecm_counter._nonpager_end_time = new_end_time
-				if (managers.hud._hud_ecm_counter._pager_block == false or managers.hud._hud_ecm_counter._active_ecm == false) then
-					managers.hud._hud_ecm_counter._end_time = new_end_time
-					managers.hud:update_ecm_icons(battery_life_upgrade_lvl == 3)
+				managers.hud._buu_ecm_counter._nonpager_end_time = new_end_time
+				if (managers.hud._buu_ecm_counter._pager_block == false or managers.hud._buu_ecm_counter._active_ecm == false) then
+					managers.hud._buu_ecm_counter._end_time = new_end_time
+					managers.hud:update_ecm_icons_2021(battery_life_upgrade_lvl == 3)
 				end
 			else
-				managers.hud._hud_ecm_counter._end_time = new_end_time
-				managers.hud:update_ecm_icons(battery_life_upgrade_lvl == 3)
+				managers.hud._buu_ecm_counter._end_time = new_end_time
+				managers.hud:update_ecm_icons_2021(battery_life_upgrade_lvl == 3)
 			end
 			if (battery_life_upgrade_lvl ~= 3) then
 				ECM2021:send_message("ECM placed does not block pagers!", ECM2021.settings.chat_on_pager)
-				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
-			elseif (managers.hud._hud_ecm_counter._pocket_ecm and managers.hud._hud_ecm_counter._active_ecm) then
+				managers.hud._buu_ecm_counter._active_ecm = true --don't send both messages
+			elseif (managers.hud._buu_ecm_counter._pocket_ecm and managers.hud._buu_ecm_counter._active_ecm) then
 				ECM2021:send_message("Full-length ECM placed!", ECM2021.settings.chat_on_start)
-				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
+				managers.hud._buu_ecm_counter._active_ecm = true --don't send both messages
 			end
-			managers.hud._hud_ecm_counter._pocket_ecm = false
+			managers.hud._buu_ecm_counter._pocket_ecm = false
 		end
 	end)
 	
@@ -200,37 +200,37 @@ elseif RequiredScript == "lib/units/equipment/ecm_jammer/ecmjammerbase" then
 	--	log("ECM: sync_setup")
 		local new_end_time = TimerManager:game():time() + self:battery_life()
 		--a new pager-blocking ECM will always have a longer end time than non-pager-blocking, so no need to check that
-		if new_end_time > managers.hud._hud_ecm_counter._end_time then
+		if new_end_time > managers.hud._buu_ecm_counter._end_time then
 			if (ECM2021.settings.pager_priority and upgrade_lvl ~= 3) then
-				managers.hud._hud_ecm_counter._nonpager_end_time = new_end_time
-				if (managers.hud._hud_ecm_counter._pager_block == false or managers.hud._hud_ecm_counter._active_ecm == false) then
-					managers.hud._hud_ecm_counter._end_time = new_end_time
-					managers.hud:update_ecm_icons(upgrade_lvl == 3)
+				managers.hud._buu_ecm_counter._nonpager_end_time = new_end_time
+				if (managers.hud._buu_ecm_counter._pager_block == false or managers.hud._buu_ecm_counter._active_ecm == false) then
+					managers.hud._buu_ecm_counter._end_time = new_end_time
+					managers.hud:update_ecm_icons_2021(upgrade_lvl == 3)
 				end
 			else
-				managers.hud._hud_ecm_counter._end_time = new_end_time
-				managers.hud:update_ecm_icons(upgrade_lvl == 3)
+				managers.hud._buu_ecm_counter._end_time = new_end_time
+				managers.hud:update_ecm_icons_2021(upgrade_lvl == 3)
 			end
 			if (upgrade_lvl ~= 3) then
 				ECM2021:send_message("ECM placed does not block pagers!", ECM2021.settings.chat_on_pager)
-				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
-			elseif (managers.hud._hud_ecm_counter._pocket_ecm and managers.hud._hud_ecm_counter._active_ecm) then
+				managers.hud._buu_ecm_counter._active_ecm = true --don't send both messages
+			elseif (managers.hud._buu_ecm_counter._pocket_ecm and managers.hud._buu_ecm_counter._active_ecm) then
 				ECM2021:send_message("Full-length ECM placed!", ECM2021.settings.chat_on_start)
-				managers.hud._hud_ecm_counter._active_ecm = true --don't send both messages
+				managers.hud._buu_ecm_counter._active_ecm = true --don't send both messages
 			end
-			managers.hud._hud_ecm_counter._pocket_ecm = false
+			managers.hud._buu_ecm_counter._pocket_ecm = false
 		end
 	end)
 	
 	--For joining mid-ECM
 	Hooks:PostHook(ECMJammerBase, "update", "buuECM_ECMJammerBase_update", function(self, unit, t, ...)
 		--log("ECM: update")
-		if (managers.hud._hud_ecm_counter._end_time == 0) then
+		if (managers.hud._buu_ecm_counter._end_time == 0) then
 			local new_end_time = TimerManager:game():time() + self:battery_life()
-			managers.hud._hud_ecm_counter._end_time = new_end_time
-			managers.hud:update_ecm_icons(false) --not sure if you can check for pager blocking / 30s battery life now, doesn't matter really
-			managers.hud._hud_ecm_counter._active_ecm = true
-			managers.hud._hud_ecm_counter._pocket_ecm = false
+			managers.hud._buu_ecm_counter._end_time = new_end_time
+			managers.hud:update_ecm_icons_2021(false) --not sure if you can check for pager blocking / 30s battery life now, doesn't matter really
+			managers.hud._buu_ecm_counter._active_ecm = true
+			managers.hud._buu_ecm_counter._pocket_ecm = false
 		end
 	end)
 	
@@ -239,11 +239,11 @@ elseif RequiredScript == "lib/units/beings/player/playerinventory" then
 	Hooks:PostHook(PlayerInventory, "_start_jammer_effect", "buuECM_post_PlayerInventory__start_jammer_effect", function(self, end_time)
 		local new_end_time = end_time or TimerManager:game():time() + self:get_jammer_time()
 		--need to check if this 6 second pager block should take precedence over a non-pager-block ECM
-		if new_end_time > managers.hud._hud_ecm_counter._end_time or
-		(ECM2021.settings.pager_priority and managers.hud._hud_ecm_counter._pager_block == false) then
-			managers.hud._hud_ecm_counter._end_time = new_end_time
-			managers.hud:update_ecm_icons(true)
-			managers.hud._hud_ecm_counter._pocket_ecm = true
+		if new_end_time > managers.hud._buu_ecm_counter._end_time or
+		(ECM2021.settings.pager_priority and managers.hud._buu_ecm_counter._pager_block == false) then
+			managers.hud._buu_ecm_counter._end_time = new_end_time
+			managers.hud:update_ecm_icons_2021(true)
+			managers.hud._buu_ecm_counter._pocket_ecm = true
 		end
 	end)
 elseif RequiredScript == "lib/utils/accelbyte/telemetry" then
