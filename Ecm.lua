@@ -1,7 +1,7 @@
 if RequiredScript == "lib/managers/hudmanagerpd2" then
-	HUDECMCounter = HUDECMCounter or class()
+	HUDECMCounter2021 = HUDECMCounter2021 or class()
 
-    function HUDECMCounter:init(hud)
+    function HUDECMCounter2021:init(hud)
 		self._end_time = 0
 		self._nonpager_end_time = 0
 		
@@ -69,7 +69,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		ECM2021._playing_the_game = true
     end
 
-    function HUDECMCounter:update()
+    function HUDECMCounter2021:update()
 		--Update time/visibility
 		local current_time = TimerManager:game():time()
 		local t = self._end_time - current_time
@@ -146,7 +146,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 		self._prevt = t
     end
 
-	function HUDECMCounter:update_icons(jam_pagers)
+	function HUDECMCounter2021:update_icons(jam_pagers)
         local pager_icon = self._ecm_panel:child("pager_icon")
         pager_icon:set_visible(jam_pagers)
 		self._pager_block = jam_pagers
@@ -154,7 +154,7 @@ if RequiredScript == "lib/managers/hudmanagerpd2" then
 
 	--Init
 	Hooks:PostHook(HUDManager, "_setup_player_info_hud_pd2", "buuECM_post_HUDManager__setup_player_info_hud_pd2", function(self)
-		self._hud_ecm_counter = HUDECMCounter:new(managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2))
+		self._hud_ecm_counter = HUDECMCounter2021:new(managers.hud:script(PlayerBase.PLAYER_INFO_HUD_PD2))
 	end)
 	
 	--Update ECM timer
